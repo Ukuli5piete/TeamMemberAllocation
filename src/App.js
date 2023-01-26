@@ -4,10 +4,11 @@ import './App.css';
 import { useState ,useEffect} from 'react';
 import Footer from './components/Footer';
 import Header from './components/Header';
-import Employees from './components/Employees';
-
+import Employees from './components/Employees'; 
 import { BrowserRouter as Router , Route, Routes  } from 'react-router-dom';
 import GroupedTeamMembers from './components/GroupedTeamMembers';
+import Nav from './components/Nav';
+import NotFound from './components/NotFound';
 
 export default function App() {
 
@@ -125,6 +126,7 @@ localStorage.setItem('selectedTeam',JSON.stringify(selectedTeam));
   return (
    
       <Router>
+        <Nav />
     <Header  selectedTeam={selectedTeam}
        teamMemberCount={employees.filter((employee)=>employee.teamName === selectedTeam).length}/>
        <Routes>
@@ -139,9 +141,13 @@ handleTeamSelectionChange={handleTeamSelectionChange}
 
        </Route>
 
-       <Route path='/GroupedTeamMembers' element={<GroupedTeamMembers/>}>
+       <Route path='/GroupedTeamMembers' element={<GroupedTeamMembers employees= {employees} selectedTeam={selectedTeam} setTeam={setTeam} />}>
 
        </Route>
+
+       <Route path='/*' element={<NotFound/>}>
+
+</Route>
       
           
 
